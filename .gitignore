@@ -1,0 +1,13 @@
+# Ignore my environment variables and cache
+.env
+__pycache__
+~/__pycache__
+./__pycache__
+*.sqlite
+./*.sqlite
+~/*.sqlite
+**/__pycache__
+migrations
+~/*.pyc
+*.pyc 
+bookrepo/*
