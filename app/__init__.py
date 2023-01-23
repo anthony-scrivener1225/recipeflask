@@ -18,4 +18,7 @@ def app_factory(configurations):
 #   Blueprint imports
     from app.main import blp as main_blp
     app.register_blueprint(main_blp)
+
+
+    
     return app
