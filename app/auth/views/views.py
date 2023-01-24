@@ -1,7 +1,7 @@
 from flask import session, render_template, url_for, redirect, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_smorest import abort
-from app.auth import auth
+from app.auth import blp as auth
 from app import db
 from app.models import User
 from app.auth.forms import LoginForm, RegistrationForm

@@ -1,10 +1,29 @@
-from app import db
+from app import db, login_manager
 import datetime
 from flask import current_app
 import jwt
 from werkzeug.security import check_password_hash
 
 
+
+# Registers function with flask_login and called when querying info about logged in user
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+
+recipe_history = db.Table('recipe_history',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipes.id'), primary_key=True)
+)
+
+
+recipe_tags = db.Table(
+    'recipe_tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'), primary_key=True)
+)
 
 
 
@@ -16,7 +35,7 @@ class User(db.Model):
     username = db.Column(db.String(128), unique=True)
     pass_hash = db.Column(db.String(256), unique=True)
     confirmed = db.Column(db.Boolean)
-    recipe_history = db.relationship('Recipe', lazy='subquery', secondary=recipe_history, backref=db.backref('users', lazy=True) )
+    user_recipe_history = db.relationship('Recipe', lazy='subquery', secondary=recipe_history, backref=db.backref('users', lazy=True) )
     
     
     def verify_password(self, password):
@@ -33,17 +52,7 @@ class User(db.Model):
         token = jwt.encode(payload,current_app.config['SECRET_KEY'],algorithm='HS256')
         return token
 
-recipe_history = db.Table('tags',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('recipe_id', db.Integer, db.ForeignKey('recipes.id'), primary_key=True)
-)
 
-
-recipe_tags = db.Table(
-    'recipe_tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
-    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'), primary_key=True)
-)
 
 class Recipe(db.Model):
     __tablename__ = 'recipes'

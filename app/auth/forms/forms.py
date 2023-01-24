@@ -3,9 +3,9 @@ from wtforms import StringField, PasswordField, BooleanField, SelectMultipleFiel
 from wtforms.validators import Length, DataRequired, EqualTo
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired])
-    password = PasswordField('Password', validators=[DataRequired, Length(12, 256), EqualTo('password2')])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired, Length(12, 256)])
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(12, 256), EqualTo('password2')])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(12, 256)])
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired('You must type your username')])
