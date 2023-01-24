@@ -11,4 +11,4 @@ app = app_factory(getenv('ENV') or 'default')
 
 
 if __name__ == '__main__':
-    app.run(DEBUG=getenv('DEBUG'), port=getenv('PORT'))
+    app.run(DEBUG=app.config['DEBUG'], port=app.config['PORT'])

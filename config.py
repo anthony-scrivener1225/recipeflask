@@ -12,14 +12,14 @@ class DevConfig(BaseConfig):
     PORT = 8080
     DEBUG = True
     ENV = 'development'
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI') or 'sqlite:///'+os.path.join(basedir+'dev-db.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI') or 'sqlite:///'+os.path.join(basedir+'/dev-db.sqlite')
 
 class TestConfig(BaseConfig):
     PORT = 8081
     DEBUG = True
     TESTING = True
     ENV = 'testing'
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI') or 'sqlite:///'+os.path.join(basedir+'testing-db.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI') or 'sqlite:///'+os.path.join(basedir+'/testing-db.sqlite')
 
 class ProdConfig(BaseConfig):
     PORT = 80
