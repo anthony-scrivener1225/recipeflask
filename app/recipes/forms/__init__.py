@@ -1,1 +1,1 @@
-from app.recipes.forms.forms import AddRecipe
+from app.recipes.forms.forms import AddRecipe, AddTag
