@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container jumbotron align-items-center">
-    <h3>This is the Home Page </h2>
+
+<div class="container jumbotron align-items-center bg-dark my-3">
+    <h3 class="text-light" >This is the Home Page </h2>
     <hr class="my-4">
         {% if current_user.is_authenticated %}
-        <a href="{{url_for('main.about_us')}}" class="btn btn-primary my-4"> About Us <i class="fa fa-arrow-right"></i></a>
+        <a href="{{url_for('main.about_us')}}" class="btn btn-primary-outline my-4 bg-light"> About Us <i class="fa fa-arrow-right"></i></a>
         {% else %}
-        <a href="{{url_for('auth.login')}}" class="btn btn-primary my-4"> Login <i class="fa fa-arrow-right"></i></a>
+        <a href="{{url_for('auth.login')}}" class="btn btn-primary-outline  bg-light my-4"> Login <i class="fa fa-arrow-right"></i></a>
         {% endif %}
     </p>
 </div>
@@ -21,4 +22,10 @@
             Please use any of the links above for navigation.
     </p>
 </div>
+
+<style>
+    #jumborecipe{
+        background-image: url("https://media.istockphoto.com/id/1363638825/photo/vegan-plant-based-asian-food-recipes-with-rice-and-brown-rice-as.jpg?s=1024x1024&w=is&k=20&c=qTpZMJEEmuaEFZBULfj3gk4NDCkKoECh2b1T12DOnj8=");
+    }
+</style>
 {% endblock %}
