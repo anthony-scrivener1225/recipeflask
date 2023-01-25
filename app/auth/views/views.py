@@ -52,7 +52,7 @@ def register():
  
         msg = Mail(
             subject=f"Account Verification - {user.username}",
-            from_email=os.environ.get('FLASKY_MAIL_SENDER'),
+            from_email=os.environ.get('MAIL_SENDER'),
             to_emails=[user.email],
             html_content=render_template("welcome_email.html",token=token,username=user.username,port=os.environ.get('PORT'))
         )

@@ -24,9 +24,6 @@
           {% if current_user.is_authenticated %}
           <a class="nav-item nav-link navbar-right" href="{{ url_for('auth.logout') }}">Log Out</a>
         </li> 
-        <li>
-          <a class="nav-item nav-link navbar-right" href="{{ url_for('main.my_account') }}">Account</a>
-        </li>
           {% else %}
         <li>
           <a class="nav-item nav-link navbar-right" href="{{ url_for('auth.login') }}">Log In</a>
