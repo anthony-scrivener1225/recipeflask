@@ -80,6 +80,7 @@ class Tag(db.Model):
     name = db.Column(db.String(64), unique=True)
     recipes = db.relationship('Recipe', secondary=recipe_tags, back_populates='tags')
 
+
 class Ingredient(db.Model):
     __tablename__ = 'ingredients'
 

@@ -22,7 +22,11 @@ def recipe_view(recipe_id):
 
 @recipe_blp.route('/addtag')
 def add_tag():
-    form = AddTag()
+    tag_results = db.session.query(Tag.name).all()
+    choices = []
+    for x in range(len(tag_results)+1):
+        choices.append((x+1, tag_results[x]))
+    form = AddTag(choices=choices)
     if form.validate_on_submit:
         tag = Tag(name=form.data.name.replace(" ",""))
         db.session.add(tag)
