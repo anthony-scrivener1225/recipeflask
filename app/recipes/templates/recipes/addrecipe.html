@@ -1,26 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
 
-<div class="container my-3">
-    <div class="jumbotron btn-primary bg-dark">
-        <h3>Login Page</h3>
-    </div>
+<div class="container jumbotron">
+    <h3>Recipe Add Form</h3>
+</div>
+<div class="container">
     <form method="POST">
         {{form.hidden_tag()}}
-        <div class="mb-3">
-            {{form.name.label}}
-            {{form.name(class_="form-control")}}
-            <div  id="email-help" class="form-text"> <i>Please use your validated email to login.</i></div>
+        <div class="my-3">
+            {{ form.recipe_name.label }}
+            {{ form.recipe_name(class_="form-control") }}
         </div>
-        <div class="mb-3">
-            {{form.description.label}}
-            {{form.description(class_="form-control")}}
+        <div class="my-3">
+            {{ form.recipe_description.label}}
+            {{ form.recipe_description(class_="form-control") }}
         </div>
-        <div class="mb-2">
-            {{form.remember_me(_class="form-control")}} Stay Logged In.
+        <div class="form-group py-2 my-4">
+            {{ form.recipe_ingredients.label }}
+            {% for subform in form.recipe_ingredients %}
+                {{ subform.ingredient(class_="form-control") }}
+            {% endfor %}
         </div>
-        <div class="mb-3">
-            {{form.submit(class_="btn btn-secondary")}}
+        <div class="form-group">
+            <button type="button" class="btn btn-primary add-ingredient">Add Ingredient</button>
+        </div>
+        <div class="my-2">
+            {{ form.recipe_tags(class_="form-control")}}
+        </div>
+        <div class='my-2'>
+            {{ form.submit(class_='btn btn-primary') }}
         </div>
     </form>
 </div>
-
+<script>
+    var ingredient_index = {{ form.recipe_ingredients.min_entries - 1 }};
+    $(document).ready(function() {
+        $('.add-ingredient').click(function() {
+            var ingredients_template = `<div class="form-group">
+                                            <input type="text" class="form-control" name="recipe_ingredients-${ingredient_index}-ingredient">
+                                        </div>`;
+            $('form .form-group:last').before(ingredients_template);
+            ingredient_index++;
+        });
+    });
+</script>
 {% endblock %}

@@ -69,8 +69,11 @@ class Recipe(db.Model):
     __tablename__ = 'recipes'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False)
-    description = db.Column(db.String(512))
+    description = db.Column(db.String(256))
     tags = db.relationship('Tag', secondary=recipe_tags, back_populates='recipes')
+
+    def __repr__(self):
+        return f'{self.name}'
 
 
 
@@ -79,6 +82,9 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     recipes = db.relationship('Recipe', secondary=recipe_tags, back_populates='tags')
+
+    def __repr__(self):
+        return f'{self.name}'
 
 
 class Ingredient(db.Model):
@@ -89,5 +95,5 @@ class Ingredient(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     recipes = db.relationship('Recipe', backref='ingredients')
 
-
-
+    def __repr__(self):
+        return f'{self.details}'

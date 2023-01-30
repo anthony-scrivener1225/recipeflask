@@ -44,25 +44,29 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, password=form.password.data, email=form.email.data)
-        db.session.add(user)
-        db.session.commit()
-        token = user.generate_confirmation_token()
-        flash('Account was successfully created.', category='alert-success')
- 
-        msg = Mail(
-            subject=f"Account Verification - {user.username}",
-            from_email=os.environ.get('MAIL_SENDER'),
-            to_emails=[user.email],
-            html_content=render_template("welcome_email.html",token=token,username=user.username,port=os.environ.get('PORT'))
-        )
-        try:
-            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-            json_msg = msg.get()
-            sg.send(message=json_msg)
-        except Exception as e:
-            print(e)
-        return redirect(url_for('auth.login'))
+        if User.query.filter_by(username=form.username.data).first() is None and User.query.filter_by(email=form.email.data) is None:
+            user = User(username=form.username.data, password=form.password.data, email=form.email.data)
+            db.session.add(user)
+            db.session.commit()
+            token = user.generate_confirmation_token()
+            flash('Account was successfully created.', category='alert-success')
+    
+            msg = Mail(
+                subject=f"Account Verification - {user.username}",
+                from_email=os.environ.get('MAIL_SENDER'),
+                to_emails=[user.email],
+                html_content=render_template("welcome_email.html",token=token,username=user.username,port=os.environ.get('PORT'))
+            )
+            try:
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                json_msg = msg.get()
+                sg.send(message=json_msg)
+            except Exception as e:
+                print(e)
+            return redirect(url_for('auth.login'))
+        else:
+            flash('Username or email already registered!')
+            render_template('register.html', form=form, category='alert-warning')
     return render_template('register.html', form=form)
 
 @auth.route('/confirm/<token>')

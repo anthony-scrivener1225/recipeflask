@@ -1,1 +1,1 @@
-from app.models.models import User, Recipe, recipe_history, recipe_tags, Tag
+from app.models.models import User, Recipe, Ingredient, recipe_history, recipe_tags, Tag
