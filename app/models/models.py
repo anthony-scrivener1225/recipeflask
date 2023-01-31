@@ -36,7 +36,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(128), unique=True)
     email = db.Column(db.String(128), unique=True, index=True)
     pass_hash = db.Column(db.String(256), unique=True)
-    confirmed = db.Column(db.Boolean)
+    confirmed = db.Column(db.Boolean, default=False)
+    failed_pwd = db.Column(db.Integer, default=0)
+    account_locked = db.Column(db.Boolean, default=False)
     user_recipe_history = db.relationship('Recipe', lazy='subquery', secondary=recipe_history, backref=db.backref('users', lazy=True) )
     
 
@@ -49,6 +51,16 @@ class User(UserMixin, db.Model):
         self.pass_hash = generate_password_hash(password)
     
     def verify_password(self, password):
+        max_lockout = 3
+        if not check_password_hash(self.pass_hash, password):
+            if self.failed_pwd < max_lockout:
+                 self.failed_pwd += 1
+                 db.session.add(self)
+                 db.session.commit()
+            if self.failed_pwd >= max_lockout:
+                self.account_locked = True
+                db.session.add(self)
+                db.session.commit()
         return check_password_hash(self.pass_hash, password)
 
     def __repr__(self):
