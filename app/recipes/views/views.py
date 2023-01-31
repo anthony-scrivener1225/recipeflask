@@ -28,6 +28,7 @@ def recipe_view(recipe_id):
     return render_template('viewrecipe.html', recipe=recipe)
 
 @blp.route('/addtag', methods=["GET","POST"])
+@login_required
 def add_tag():
     form = AddTag()
     if form.validate_on_submit():

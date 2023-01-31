@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container jumbotron bg-secondary text-white"> <h3>Account Page</h3></div>
+<div class="container jumbotron bg-secondary text-white my-3"> <h3>Account Page</h3></div>
 <div class="container">
     <div class="row">
+        <div class="col-4 border rounded">
+            space for profile pic
+        </div>
         <div class="col-4">
-            Username: {{user.username}}
-            Recipes Created: 0
-            Email: {{user.email}}
+            Username: {{user.username}} <br>
+            Recipes Created: 0 <br>
+            Email: {{user.email}} <br>
         </div>
     </div>
 </div>
