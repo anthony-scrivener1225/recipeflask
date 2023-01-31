@@ -17,7 +17,7 @@ def add_recipe():
             db.session.add(new_ingredient)
         db.session.commit()
         flash('Recipe added successfully.', category='alert-success')
-        return redirect(url_for(f'recipe.recipe_view/{recipe.id}'))
+        return redirect(url_for(f'recipes.recipe_view', recipe_id=recipe.id))
     return render_template('addrecipe.html', form=form)
 
 @blp.route('/view/<recipe_id>')

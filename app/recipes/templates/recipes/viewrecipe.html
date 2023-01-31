@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="container jumbotron"> <h4>  Recipe: {{recipe.name | capitalize() }}  </h4></div>
+    <div class="div p-4 m-4">
+        <p class="my-4">
+            {{recipe.description}}
+        </p>
+        <hr>
+        <ol>
+            {% for i in recipe.ingredients %}
+            <li>
+                {{i}}
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
