@@ -7,15 +7,15 @@ from app import db
 @blp.route('/addrecipe', methods=["GET","POST"])
 def add_recipe():
     form = AddRecipe()
-    if form.validate_on_submit():
+    if form.is_submitted():
         recipe = Recipe(name=form.recipe_name.data,description=form.recipe_description.data)
-        recipe.tags = form.recipe_tags
+        recipe.tags = form.recipe_tags.data
         db.session.add(recipe)
         db.session.commit()
         for ingre in form.recipe_ingredients.data:
-            new_ingredient = Ingredient(details=ingre.data,recipe_id=Recipe.query.filter_by(form.recipe_name.data).first().id)
+            new_ingredient = Ingredient(details=ingre['ingredient'],recipe_id=recipe.id)
             db.session.add(new_ingredient)
-            db.session.commit()
+        db.session.commit()
         flash('Recipe added successfully.', category='alert-success')
         return redirect(url_for(f'recipe.recipe_view/{recipe.id}'))
     return render_template('addrecipe.html', form=form)
