@@ -25,17 +25,14 @@ def recipe_view(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first()
     return render_template('viewrecipe.html', recipe=recipe)
 
-@blp.route('/addtag')
+@blp.route('/addtag', methods=["GET","POST"])
 def add_tag():
-    tag_results = db.session.query(Tag.name).all()
-    choices = []
-    for x in range(len(tag_results)+1):
-        choices.append((x+1, tag_results[x]))
-    form = AddTag(choices=choices)
+    form = AddTag()
     if form.validate_on_submit():
-        tag = Tag(name=form.data.name.replace(" ",""))
+        tag = Tag(name=form.tag_name.data.replace(" ",""))
         db.session.add(tag)
         db.session.commit()
+        form.tag_name.data = ""
         flash('Tag added successfully.',category='alert-success')
-    return render_template('addtag.html')
+    return render_template('addtag.html', form=form)
     
