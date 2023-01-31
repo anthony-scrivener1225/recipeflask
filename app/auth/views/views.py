@@ -44,12 +44,11 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        if User.query.filter_by(username=form.username.data).first() is None and User.query.filter_by(email=form.email.data) is None:
+        if User.query.filter_by(email=form.email.data).first() is None:
             user = User(username=form.username.data, password=form.password.data, email=form.email.data)
             db.session.add(user)
             db.session.commit()
             token = user.generate_confirmation_token()
-            flash('Account was successfully created.', category='alert-success')
     
             msg = Mail(
                 subject=f"Account Verification - {user.username}",
@@ -63,10 +62,11 @@ def register():
                 sg.send(message=json_msg)
             except Exception as e:
                 print(e)
+            flash('Account was successfully created.', category='alert-success')
             return redirect(url_for('auth.login'))
         else:
-            flash('Username or email already registered!')
-            render_template('register.html', form=form, category='alert-warning')
+            flash('Username or email already registered!', category='alert-warning')
+            render_template('register.html', form=form)
     return render_template('register.html', form=form)
 
 @auth.route('/confirm/<token>')
@@ -87,7 +87,7 @@ def resend_confirmation():
     token = current_user.generate_confirmation_token()
     msg = Mail(
         subject=f"Account Verification - {current_user.username}",
-        from_email=os.environ.get('FLASKY_MAIL_SENDER'),
+        from_email=os.environ.get('MAIL_SENDER'),
         to_emails=[current_user.email],
         html_content=render_template("welcome_email.html",token=token,username=current_user.username,port=os.environ.get('PORT'))
     )

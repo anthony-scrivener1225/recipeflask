@@ -24,15 +24,18 @@
           {% if current_user.is_authenticated %}
           <a class="nav-item nav-link navbar-right" href="{{ url_for('auth.logout') }}">Log Out</a>
         </li> 
+        <li>
+          <a class="nav-item nav-link navbar-right" href="{{ url_for('recipes.add_recipe') }}">Add Recipes</a>
+        </li>
+        <li>
+          <a class="nav-item nav-link navbar-right" href="{{ url_for('recipes.add_tag') }}">Add Tags</a>
+        </li>
           {% else %}
         <li>
           <a class="nav-item nav-link navbar-right" href="{{ url_for('auth.login') }}">Log In</a>
         </li>
         <li>
           <a class="nav-item nav-link" href="{{ url_for('auth.register') }}">Register</a>
-        </li>
-        <li>
-          <a class="nav-item nav-link navbar-right" href="{{ url_for('recipes.add_recipe') }}">Add Recipes</a>
         </li>
           {% endif %}
         </ul>

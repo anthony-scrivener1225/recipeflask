@@ -1,10 +1,12 @@
 from flask import session, render_template, url_for, redirect, request, flash
 from app.recipes import blp
+from flask_login import login_required
 from app.recipes.forms import AddRecipe, AddTag
 from app.models import Recipe, Tag, Ingredient
 from app import db
 
 @blp.route('/addrecipe', methods=["GET","POST"])
+@login_required
 def add_recipe():
     form = AddRecipe()
     if form.is_submitted():

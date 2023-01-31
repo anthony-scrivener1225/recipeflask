@@ -62,7 +62,18 @@ class User(UserMixin, db.Model):
         token = jwt.encode(payload,current_app.config['SECRET_KEY'],algorithm='HS256')
         return token
 
+    def confirm(self, token):
+        try:
+            data = jwt.decode(token,current_app.config['SECRET_KEY'],algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            return False
 
+        if data.get('confirm') != self.id or data.get('exp') < int(datetime.datetime.utcnow().timestamp()):
+            return False
+        self.confirmed = True
+        db.session.add(self)
+        return True
+    
 
 
 class Recipe(db.Model):
