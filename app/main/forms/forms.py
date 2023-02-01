@@ -1,20 +1,19 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, SubmitField, EmailField, StringField
-from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
+from wtforms.validators import DataRequired, EqualTo, Length, ValidationError, StopValidation
 from flask_login import current_user
 from app.models import User
+from flask import flash
 
 def existing_email(form, field):
-    if User.query.filter_by(email=field.data).first() is not None and field.data != current_user.email:
-        raise ValidationError("Email already in use.")
-    else:
-        return True
+        if User.query.filter_by(email=field.data).first() is not None and field.data != current_user.email:
+            flash(f"Email: {field.data} is already registered.", category='alert-warning')
+            raise ValidationError(f"Email: {field.data} is already registered.")
 
 def existing_username(form, field):
-    if User.query.filter_by(username=field.data).first() is not None and field.data != current_user.username:
-        raise ValidationError("Username is already in use.")
-    else:
-        return True
+        if User.query.filter_by(username=field.data).first() is not None and field.data != current_user.username:
+            flash(f"Username: {field.data} is already registered.", category='alert-warning')
+            raise ValidationError(f"Username: {field.data} is already registered.")
 
 class PasswordReset(FlaskForm):
     password = PasswordField('New Password', validators=[DataRequired()])
@@ -25,4 +24,4 @@ class ProfileUpdate(FlaskForm):
     email = EmailField('Update your email', validators=[existing_email])
     email_confirm = EmailField('Confirm new email', validators=[EqualTo('email')])
     username = StringField('Update your username', validators=[existing_username])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Update Details')
