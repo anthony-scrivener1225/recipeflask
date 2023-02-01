@@ -30,7 +30,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user.account_locked:
+        if user is not None and user.account_locked:
             flash('Your account has been locked!', category='alert-warning')
             form.data.clear()
             return render_template('login.html', form=form)

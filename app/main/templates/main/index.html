@@ -5,7 +5,7 @@
     <h3 class="text-light" >This is the Home Page </h2>
     <hr class="my-4">
         {% if current_user.is_authenticated %}
-        <a href="{{url_for('main.index')}}" class="btn btn-secondary-outline my-4 bg-Dark"> Home <i class="fa fa-arrow-right"></i></a>
+        <a href="{{url_for('recipes.add_recipe')}}" class="btn btn-secondary-outline my-4 bg-light"> Add Recipes <i class="fa fa-arrow-right"></i></a>
         {% else %}
         <a href="{{url_for('auth.login')}}" class="btn btn-secondary-outline  bg-light my-4"> Login <i class="fa fa-arrow-right"></i></a>
         {% endif %}

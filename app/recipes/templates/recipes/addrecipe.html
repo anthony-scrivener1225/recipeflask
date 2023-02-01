@@ -33,7 +33,7 @@
     </form>
 </div>
 <script>
-    var ingredient_index = {{ form.recipe_ingredients.min_entries - 1 }};
+    var ingredient_index = {{form.recipe_ingredients.min_entries}};
     $(document).ready(function() {
         $('.add-ingredient').click(function() {
             var ingredients_template = `<div class="form-group">
@@ -44,4 +44,5 @@
         });
     });
 </script>
+
 {% endblock %}

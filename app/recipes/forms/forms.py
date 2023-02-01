@@ -15,7 +15,7 @@ class AddRecipe(FlaskForm):
     def tag_collector():
         return db.session.query(Tag).all()
     recipe_name = StringField('Name your recipe.', description="Give a succent yet detailed name for your recipe")
-    recipe_ingredients = FieldList(FormField(IngredientForm))
+    recipe_ingredients = FieldList(FormField(IngredientForm),min_entries=1)
     recipe_tags = QuerySelectMultipleField(query_factory=tag_collector)
     recipe_description = TextAreaField('Provide details about the recipe and why it should be made')
     submit = SubmitField('Submit')

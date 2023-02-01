@@ -8,10 +8,24 @@
         </div>
         <div class="col-4">
             Username: {{user.username}} <br>
-            Recipes Created: 0 <br>
+            Recipes Created: {{recipes | count}} <br>
             Email: {{user.email}} <br>
         </div>
     </div>
+    <hr class="mb-5 mt-4">
+    {% for recipe in recipes %}
+    <div class='row my-3'>
+        <div class="col  border rounded">
+            <a href="{{url_for('recipes.recipe_view', recipe_id=recipe.id)}}">{{recipe.name}} </a>
+        </div>
+        <div class="col-4  border rounded mx-1">
+
+        </div>
+        <div class="col  border rounded">
+            {{recipe.description}}
+        </div>
+    </div>
+    {% endfor %}
 </div>
 
 

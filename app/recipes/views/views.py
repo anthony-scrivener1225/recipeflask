@@ -4,13 +4,14 @@ from flask_login import login_required
 from app.recipes.forms import AddRecipe, AddTag
 from app.models import Recipe, Tag, Ingredient
 from app import db
+from flask_login import current_user
 
 @blp.route('/addrecipe', methods=["GET","POST"])
 @login_required
 def add_recipe():
     form = AddRecipe()
     if form.is_submitted():
-        recipe = Recipe(name=form.recipe_name.data,description=form.recipe_description.data)
+        recipe = Recipe(name=form.recipe_name.data,description=form.recipe_description.data,created_by=current_user.id)
         recipe.tags = form.recipe_tags.data
         db.session.add(recipe)
         db.session.commit()
