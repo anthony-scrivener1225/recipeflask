@@ -22,6 +22,7 @@ class PasswordReset(FlaskForm):
     submit = SubmitField('Update Password')
 
 class ProfileUpdate(FlaskForm):
-    email = EmailField('Update your email',default=current_user.email, validators=[existing_email])
-    email_confirm = EmailField('Confirm new email',default=current_user.email, validators=[EqualTo('email')])
-    username = StringField('Update your username', default=current_user.username, validators=[existing_username])
+    email = EmailField('Update your email', validators=[existing_email])
+    email_confirm = EmailField('Confirm new email', validators=[EqualTo('email')])
+    username = StringField('Update your username', validators=[existing_username])
+    submit = SubmitField('Submit')

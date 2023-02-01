@@ -29,13 +29,18 @@ def update_account():
         flash('Password successfully changed.', category='alert-success')
         return redirect(url_for('main.my_account'))
     elif profile_form.validate_on_submit():
+        pwd_change = False
         if current_user.email != profile_form.email.data:
             current_user.email = profile_form.email.data
             current_user.confirmed = False
+            pwd_change = True
         elif current_user.username != profile_form.username.data:
             current_user.username = profile_form.username.data
         db.session.add(current_user)
         db.session.commit()
-        flash('Profile successfully updated.', category='alert-success')
-        return redirect(url_for('main.my_account'))
+        flash(('Profile successfully updated. A new confirmation email was sent to your updated email.' if pwd_change else 'Profile successfully updated.'), category='alert-success')
+        if pwd_change:
+            return redirect(url_for('auth.resend_confirmation'))
+        else:
+            return redirect(url_for('main.my_account'))
     return render_template('updateaccount.html', pass_form=pass_form,profile_form=profile_form, user=current_user)
