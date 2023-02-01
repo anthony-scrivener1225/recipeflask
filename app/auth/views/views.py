@@ -11,16 +11,16 @@ import os
 
 @auth.before_app_request
 def before_request():
+    if current_user.is_authenticated:
+        current_user.ping()
     if current_user.is_authenticated \
         and not current_user.confirmed \
             and request.blueprint != 'auth' \
                 and request.endpoint != 'static' \
                     and request.endpoint != 'main.index':
+                        flash('Account is not confirmed!', category='alert-warning')
                         return redirect(url_for('auth.unconfirmed'))
-    elif current_user.is_authenticated \
-            and not current_user.confirmed \
-                and request.endpoint == 'main.index':
-                    flash('Account is not confirmed!', category='alert-danger')
+
 
 
 @auth.route('/login', methods=['POST','GET'])

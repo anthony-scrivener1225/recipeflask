@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 
+
 # Registers function with flask_login and called when querying info about logged in user
 @login_manager.user_loader
 def load_user(user_id):
@@ -39,6 +40,8 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     failed_pwd = db.Column(db.Integer, default=0)
     account_locked = db.Column(db.Boolean, default=False)
+    last_seen = db.Column(db.DateTime(), default=datetime.datetime.utcnow())
+    member_since = db.Column(db.DateTime(), default=datetime.datetime.utcnow())
     user_recipe_history = db.relationship('Recipe', lazy='subquery', secondary=recipe_history, backref=db.backref('users', lazy=True) )
     
 
@@ -85,6 +88,11 @@ class User(UserMixin, db.Model):
         self.confirmed = True
         db.session.add(self)
         return True
+    
+    def ping(self):
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
     
 
 
