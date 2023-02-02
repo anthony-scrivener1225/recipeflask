@@ -5,6 +5,7 @@ from app.recipes.forms import AddRecipe, AddTag
 from app.models import Recipe, Tag, Ingredient
 from app import db
 from flask_login import current_user
+from random import choice
 
 @blp.route('/addrecipe', methods=["GET","POST"])
 @login_required
@@ -23,10 +24,14 @@ def add_recipe():
         return redirect(url_for(f'recipes.recipe_view', recipe_id=recipe.id))
     return render_template('addrecipe.html', form=form)
 
+@blp.route('/view')
 @blp.route('/view/<recipe_id>')
-def recipe_view(recipe_id):
+def recipe_view(recipe_id=None):
+    if recipe_id == None:
+        return redirect(url_for('recipes.recipe_view', recipe_id=choice(Recipe.query.all()).id))
     recipe = Recipe.query.filter_by(id=recipe_id).first()
     return render_template('viewrecipe.html', recipe=recipe)
+
 
 @blp.route('/addtag', methods=["GET","POST"])
 @login_required
