@@ -3,15 +3,16 @@
 <div class="container jumbotron bg-secondary text-white my-3"> <h3>Account Page</h3></div>
 <div class="container">
     <div class="row">
-        <div class="col-4 border rounded">
-            space for profile pic
+        <div class="col-4 rounded">
+            <img src="../../../static/avatars/{{user.avatar}}" width="200" height="200" alt="profile_photo">
         </div>
+
         <div class="col-4">
             Username: {{user.username}} <br>
             Recipes Created: {{recipes | count}} <br>
             Email: {{user.email}} <br>
-            Last Seen: {{user.last_seen}} <br>
-            Member Since: {{user.member_since}} <br>
+            Last Seen: {{user.last_seen.strftime('%B %d, %Y')}} <br>
+            Member Since: {{user.member_since.strftime('%B %d, %Y')}} <br>
         </div>
     </div>
     <hr class="mb-5 mt-4">

@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, SubmitField, EmailField, StringField
-from wtforms.validators import DataRequired, EqualTo, Length, ValidationError, StopValidation
+from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
+from flask_wtf.file import FileRequired, FileField, FileSize, FileAllowed
 from flask_login import current_user
 from app.models import User
 from flask import flash
@@ -25,3 +26,12 @@ class ProfileUpdate(FlaskForm):
     email_confirm = EmailField('Confirm new email', validators=[EqualTo('email')])
     username = StringField('Update your username', validators=[existing_username])
     submit = SubmitField('Update Details')
+
+class ProfilePhotoUpload(FlaskForm):
+        profile_photo = FileField(
+            validators=[
+                FileRequired(),
+                FileAllowed(["png", "jpg", "jpeg"], "This file is not a valid image !",),
+            ]
+        )
+        submit = SubmitField()

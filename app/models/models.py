@@ -4,6 +4,8 @@ from flask import current_app
 from flask_login import UserMixin, AnonymousUserMixin, current_user
 import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
+import os
+from config import basedir
 
 
 
@@ -32,8 +34,10 @@ recipe_tags = db.Table(
 class User(UserMixin, db.Model):
 
     __tablename__ = 'users'
-
+    
+    default_photo = os.path.join(os.path.join(basedir+'/app/static/avatars/'+'default.png'))
     id = db.Column(db.Integer, primary_key=True)
+    avatar = db.Column(db.String(128),default=default_photo)
     username = db.Column(db.String(128), unique=True)
     email = db.Column(db.String(128), unique=True, index=True)
     pass_hash = db.Column(db.String(256), unique=True)
