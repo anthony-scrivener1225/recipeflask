@@ -1,1 +1,1 @@
-from app.main.forms.forms import PasswordReset, ProfileUpdate, ProfilePhotoUpload
+from app.main.forms.forms import PasswordReset, ProfileUpdate, PhotoUpload

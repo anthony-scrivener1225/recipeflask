@@ -10,16 +10,17 @@
         <div class="row">
             <div class="col4 border-right">
                 <img src="../../../static/avatars/{{user.avatar}}" width="200" height="200" alt="profile_photo">
-                <form method="POST" id="profile_photo_form" enctype="multipart/form-data">
-                    <input type="file" name="image_file" accept=".png,.jpeg" class="mx-1">
-                    <p><input type="submit" name="profile_photo_form" id="profile_photo_form" value="Submit" class="form-control btn btn-secondary my-3 px-2"></p>
+                <form method="POST" enctype="multipart/form-data" action="{{url_for('main.update_profile_photo')}}">
+                    {{update_profile_photo.hidden_tag()}}
+                    {{update_profile_photo.file(class_="form-control")}}
+                    {{update_profile_photo.submit(class_="form-control btn btn-secondary my-2 px-4")}}
                 </form>
             </div>
             <div class="col-2">
                 <!-- Empty Spacing for Future columns-->
             </div>
             <div class="col-4">
-                <form method="POST">
+                <form method="POST" id="update_profile_info" action="{{url_for('main.update_profile_info')}}">
                     {{profile_form.hidden_tag()}}
                     <div class="px-3 mx-3">
                         {{profile_form.username.label}}
@@ -38,7 +39,7 @@
     </div>
     <hr class="my-5">
     <div class="container" id="pass_form">
-        <form method="POST">
+        <form method="POST"  action="{{url_for('main.update_password')}}">
             {{pass_form.hidden_tag()}}
             <div class="px-5 mx-5">
                 {{pass_form.password.label}}

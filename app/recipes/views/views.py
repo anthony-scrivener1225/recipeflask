@@ -32,6 +32,13 @@ def recipe_view(recipe_id=None):
     recipe = Recipe.query.filter_by(id=recipe_id).first()
     return render_template('viewrecipe.html', recipe=recipe)
 
+@blp.route('/deleterecipe')
+@blp.route('/deleterecipe/<int:recipe_id>')
+def delete_recipe(recipe_id=None):
+    if recipe_id == None:
+        return render_template('myrecipes.html')
+    
+
 
 @blp.route('/addtag', methods=["GET","POST"])
 @login_required
