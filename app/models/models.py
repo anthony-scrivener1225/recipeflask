@@ -1,6 +1,6 @@
 from app import db, login_manager
 import datetime
-from flask import current_app
+from flask import current_app, abort
 from flask_login import UserMixin, AnonymousUserMixin, current_user
 import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -14,7 +14,6 @@ from config import basedir
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
 
 
 recipe_history = db.Table('recipe_history',
@@ -44,6 +43,7 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     failed_pwd = db.Column(db.Integer, default=0)
     account_locked = db.Column(db.Boolean, default=False)
+    role = db.Column(db.Integer, default=1)
     last_seen = db.Column(db.DateTime(), default=datetime.datetime.utcnow())
     member_since = db.Column(db.DateTime(), default=datetime.datetime.utcnow())
     user_recipe_history = db.relationship('Recipe', lazy='subquery', secondary=recipe_history, backref=db.backref('users', lazy=True) )

@@ -8,6 +8,20 @@ from app.auth.forms import LoginForm, RegistrationForm
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import os
+from functools import wraps
+
+def role_access(role_value):
+    def access_wrapper(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            if current_user.is_authenticated:
+                if current_user.role == role_value:
+                    return fn(*args, **kwargs)
+                else:
+                    abort(403)
+        return wrapper
+    return access_wrapper
+
 
 @auth.before_app_request
 def before_request():

@@ -6,6 +6,14 @@ from app import db
 import os
 from config import basedir
 from app.main.forms import PasswordReset,ProfileUpdate, PhotoUpload
+from app.auth import role_access
+
+
+@blp.route('/adminpanel')
+@login_required
+@role_access(1)
+def test_admin():
+    return render_template('adminpanel.html')
 
 
 @blp.route('/')

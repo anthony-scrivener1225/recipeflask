@@ -26,6 +26,8 @@ def app_factory(configurations):
     app.register_blueprint(auth_blp)
     from app.recipes import blp as recipe_blp
     app.register_blueprint(recipe_blp)
+    from app.errorhandling import blp as error_blp
+    app.register_blueprint(error_blp)
 
 
     
