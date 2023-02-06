@@ -6,16 +6,23 @@ from app.models import Recipe, Tag, Ingredient
 from app import db
 from flask_login import current_user
 from random import choice
+from config import basedir
+import os
 
 @blp.route('/addrecipe', methods=["GET","POST"])
 @login_required
 def add_recipe():
     form = AddRecipe()
     if form.is_submitted():
+        uploaded_file = form.file.data
+        if uploaded_file.filename != '':
+            sep_file = os.path.splitext(uploaded_file.filename)[1]
         recipe = Recipe(name=form.recipe_name.data,description=form.recipe_description.data,created_by=current_user.id)
         recipe.tags = form.recipe_tags.data
         db.session.add(recipe)
         db.session.commit()
+        recipe.image = str(recipe.id)+sep_file
+        uploaded_file.save(basedir+'/app/static/recipes/'+recipe.image)
         for ingre in form.recipe_ingredients.data:
             new_ingredient = Ingredient(details=ingre['ingredient'],recipe_id=recipe.id)
             db.session.add(new_ingredient)

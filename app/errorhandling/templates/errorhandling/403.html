@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container jumbotron">
+<div class="container jumbotron bg-danger text-white my-3">
     <h3> Restricted Page</h3>
 </div>
 <div class="container">
     <p>
         It looks like you tried to access a restricted page! Please go back or select a different location. 
     </p>
-    <img src="../../static/403.webp" alt="denied_image">
+    <img src="../../static/errorhandling/403.webp" alt="denied_image" class="p-5 my-3 mx-5">
 </div>
 {% endblock %}

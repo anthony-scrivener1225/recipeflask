@@ -10,7 +10,7 @@ from sendgrid.helpers.mail import Mail
 import os
 from functools import wraps
 
-def role_access(role_value):
+def role_access(role_value: int) -> int:
     def access_wrapper(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):

@@ -2,11 +2,12 @@
 {% block content %}
 
 <div class="container">
-    <div class="container jumbotron"> <h4>  Recipe: {{recipe.name | capitalize() }}  </h4></div>
+    <div class="container jumbotron bg-secondary m-3 text-white align-items-center"> <h4>  Recipe: {{recipe.name | capitalize() }}  </h4></div>
     <div class="div p-4 m-4">
         <p class="my-4">
             {{recipe.description}}
         </p>
+        <img src="../../../static/recipes/{{recipe.image}}" alt="Recipe Image" width="200">
         <hr>
         <ol>
             {% for i in recipe.ingredients %}

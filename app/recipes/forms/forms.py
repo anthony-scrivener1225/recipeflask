@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileRequired, FileField, FileSize, FileAllowed
 from wtforms import StringField, TextAreaField, SelectMultipleField, SubmitField,FieldList,FormField
 from flask_sqlalchemy import SQLAlchemy, session
 from app.models import Tag
@@ -18,6 +19,10 @@ class AddRecipe(FlaskForm):
     recipe_ingredients = FieldList(FormField(IngredientForm),min_entries=1)
     recipe_tags = QuerySelectMultipleField(query_factory=tag_collector)
     recipe_description = TextAreaField('Provide details about the recipe and why it should be made')
+    file = FileField('File', validators=[
+        FileAllowed([".jpeg",".png"]),
+        FileRequired(message='a file must be included to submit')
+    ])
     submit = SubmitField('Submit')
 
 class AddTag(FlaskForm):

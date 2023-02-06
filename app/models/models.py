@@ -106,6 +106,7 @@ class Recipe(db.Model):
     name = db.Column(db.String(256), nullable=False)
     description = db.Column(db.String(256))
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    image = db.Column(db.String(32), default='recipe_default.png')
     tags = db.relationship('Tag', secondary=recipe_tags, back_populates='recipes')
 
     def __repr__(self):

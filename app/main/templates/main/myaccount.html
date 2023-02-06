@@ -16,19 +16,24 @@
         </div>
     </div>
     <hr class="mb-5 mt-4">
-    {% for recipe in recipes %}
-    <div class='row my-3'>
-        <div class="col  border rounded">
-            <a href="{{url_for('recipes.recipe_view', recipe_id=recipe.id)}}">{{recipe.name}} </a>
-        </div>
-        <div class="col-4  border rounded mx-1">
-
-        </div>
-        <div class="col  border rounded">
-            {{recipe.description}}
-        </div>
+    <div class="container d-flex flex-wrap align-items-center">
+        {% for recipe in recipes %}
+        <div class="card m-3 bg-dark text-white" style="width: 18rem;">
+            <img class="card-img-top" src="../../../static/recipes/{{recipe.image}}" alt="Card image cap" width="200" height="150">
+            <div class="card-body">
+              <em class="card-title">{{recipe.name}}</em>
+              {% if recipe.description == '' %}
+              <p class="card-text">Delicous, why don't we add a description?</p>
+              {% else %}
+              <p class="card-text">{{recipe.description | truncate(64, killwords=True ,end='...')}}</p>
+              {% endif %}
+              <div class="container text-center">
+                <a href="{{url_for('recipes.recipe_view', recipe_id=recipe.id)}}" class="btn btn-secondary">Try it!</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 
 
