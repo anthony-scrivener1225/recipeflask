@@ -2,7 +2,7 @@ from flask import session, render_template, url_for, redirect, request, flash
 from app.recipes import blp
 from flask_login import login_required
 from app.recipes.forms import AddRecipe, AddTag
-from app.models import Recipe, Tag, Ingredient
+from app.models import Recipe, Tag, Ingredient, Direction
 from app import db
 from flask_login import current_user
 from random import choice
@@ -22,10 +22,13 @@ def add_recipe():
         db.session.add(recipe)
         db.session.commit()
         recipe.image = str(recipe.id)+sep_file
-        uploaded_file.save(basedir+'/app/static/recipes/'+recipe.image)
+        uploaded_file.save(url_for('recipes.static', filename='recipes/'+recipe.image))
         for ingre in form.recipe_ingredients.data:
             new_ingredient = Ingredient(details=ingre['ingredient'],recipe_id=recipe.id)
             db.session.add(new_ingredient)
+        for direct in form.recipe_directions.data:
+            new_direction = Direction(details=direct['direction'],recipe_id=recipe.id)
+            db.session.add(new_direction)
         db.session.commit()
         flash('Recipe added successfully.', category='alert-success')
         return redirect(url_for(f'recipes.recipe_view', recipe_id=recipe.id))

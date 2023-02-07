@@ -34,7 +34,7 @@ class User(UserMixin, db.Model):
 
     __tablename__ = 'users'
     
-    default_photo = os.path.join(os.path.join(basedir+'/app/static/avatars/'+'default.png'))
+    default_photo = 'default.png'
     id = db.Column(db.Integer, primary_key=True)
     avatar = db.Column(db.String(128),default=default_photo)
     username = db.Column(db.String(128), unique=True)
@@ -104,7 +104,7 @@ class Recipe(db.Model):
     __tablename__ = 'recipes'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False)
-    description = db.Column(db.String(256))
+    description = db.Column(db.Text)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     image = db.Column(db.String(32), default='recipe_default.png')
     tags = db.relationship('Tag', secondary=recipe_tags, back_populates='recipes')

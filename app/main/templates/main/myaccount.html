@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-4 rounded">
-            <img src="../../../static/avatars/{{user.avatar}}" width="200" height="200" alt="profile_photo">
+            <img src="{{url_for('static', filename='avatars/'+current_user.avatar)}}" width="200" height="200" alt="profile_photo">
         </div>
 
         <div class="col-4">
@@ -19,7 +19,7 @@
     <div class="container d-flex flex-wrap align-items-center">
         {% for recipe in recipes %}
         <div class="card m-3 bg-dark text-white" style="width: 18rem;">
-            <img class="card-img-top" src="../../../static/recipes/{{recipe.image}}" alt="Card image cap" width="200" height="150">
+            <img class="card-img-top" src="{{url_for('recipes.static', filename=recipe.image)}}" alt="Card image cap" width="200" height="150">
             <div class="card-body">
               <em class="card-title">{{recipe.name}}</em>
               {% if recipe.description == '' %}

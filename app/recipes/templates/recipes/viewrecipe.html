@@ -22,6 +22,11 @@
         </ul>
         <hr>
         <h5 class="my-3"> Directions</h5>
+        <ul class="list-group list-group-flush">
+            {% for d in recipe.directions %}
+            <li class="list-group-item">{{d.details}}</li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 
