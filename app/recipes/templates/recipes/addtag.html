@@ -2,16 +2,20 @@
 {% block content %}
 
 <div class="container">
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center bg-dark my-3 text-white">
         <h3> Add a Tag</h3>
     </div>
     <form method="POST">
         {{ form.hidden_tag() }}
-        <p>Please enter a tag below that perfectly describes a characteristic of a dish.</p>
-        <div class="px-5 col-4 col-lg-8 col-xl-12">
+        <p>Please enter a tag below that perfectly describes a characteristic of a dish. Any spaces will be replaced with a dash.</p>
+        <div class="form-group px-5 mx-5">
             {{form.tag_name.label}}
-            {{form.tag_name(class_="form-control")}}
-            {{form.submit(class_="btn btn-primary my-3")}}
+            {% if tag_name != None %}
+            {{form.tag_name(class_="form-control col-4", value=search_tag)}}
+            {% else %}
+            {{form.tag_name(class_="form-control col-4")}}
+            {% endif %}
+            {{form.submit(class_="btn btn-secondary my-3")}}
         </div>
 
     </form>

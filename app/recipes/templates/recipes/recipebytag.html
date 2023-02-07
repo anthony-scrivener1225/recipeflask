@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="container jumbotron bg-dark text-center text-white my-4 ">
+        <h3>{{tag_name}}</h3> 
+        <br>
+        <a href="{{url_for('recipes.add_tag')}}" class="btn btn-secondary"> Create your own!</a>
+    </div>
+    <div class="container d-flex flex-wrap align-items-center">
+        {% for recipe in tagged_recipes %}
+        <div class="card m-3 bg-dark text-white" style="width: 18rem;">
+            <img class="card-img-top" src="{{url_for('recipes.static', filename=recipe.image)}}" alt="Card image cap" width="200" height="150">
+            <div class="card-body">
+              <em class="card-title">{{recipe.name}}</em>
+              {% if recipe.description == '' %}
+              <p class="card-text">Delicous, why don't we add a description?</p>
+              {% else %}
+              <p class="card-text">{{recipe.description | truncate(64, killwords=True ,end='...')}}</p>
+              {% endif %}
+              <div class="container text-center">
+                <a href="{{url_for('recipes.recipe_view', recipe_id=recipe.id)}}" class="btn btn-secondary">Try it!</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+{% endblock %}

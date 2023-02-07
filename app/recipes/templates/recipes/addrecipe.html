@@ -15,20 +15,20 @@
             {{ form.recipe_description.label}}
             {{ form.recipe_description(class_="form-control") }}
         </div>
-        <div class="form-group py-2 my-4">
+        <div class="form-group py-2 mb-2">
             {{ form.recipe_ingredients.label }}
             {% for subform in form.recipe_ingredients %}
-                {{ subform.ingredient(class_="form-control", id='ingredients-subform') }}
+                {{ subform.ingredient(class_="form-control") }}
             {% endfor %}
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-primary add-ingredient">Add Ingredient</button>
         </div>
         <hr>
-        <div class="form-group py-2 my-4">
+        <div class="form-group py-2 mb-2">
             {{ form.recipe_directions.label }}
             {% for subform in form.recipe_directions %}
-                {{ subform.direction(class_="form-control", id='directions-subform') }}
+                {{ subform.direction(class_="form-control") }}
             {% endfor %}
         </div>
         <div class="form-group">
@@ -50,9 +50,9 @@
     $(document).ready(function() {
         $('.add-ingredient').click(function() {
             var ingredients_template = `<div class="form-group">
-                                            <input type="text" class="form-control" name="recipe_ingredients-${ingredient_index}-ingredient" id='ingredients-subform'>
+                                            <input type="text" class="form-control" name="recipe_ingredients-${ingredient_index}-ingredient">
                                         </div>`;
-            $('#ingredients-subform:last').before(ingredients_template);
+            $('.add-ingredient').before(ingredients_template);
             ingredient_index++;
         });
     });
@@ -65,7 +65,7 @@
             var directions_template = `<div class="form-group">
                                             <input type="text" class="form-control" name="recipe_directions-${direction_index}-direction">
                                         </div>`;
-            $('#directions-subform:last').before(directions_template);
+            $('.add-direction').before(directions_template);
             direction_index++;
         });
     });

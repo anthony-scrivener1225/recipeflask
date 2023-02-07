@@ -28,6 +28,11 @@
             {% endfor %}
         </ul>
     </div>
+    <div class="container">
+            {% for tag in recipe.tags %}
+                <a href="{{url_for('recipes.recipe_by_tag', tag=tag.name)}}" class="btn btn-info mx-2"> {{ tag }}</a>
+            {% endfor %}
+    </div>
 </div>
 
 
