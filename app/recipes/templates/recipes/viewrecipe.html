@@ -7,7 +7,7 @@
         <p class="my-4">
             {{recipe.description}}
         </p>
-        <img src="../../../static/recipes/{{recipe.image}}" alt="Recipe Image" width="200">
+        <img src="{{url_for('recipes.static', filename=recipe.image)}}" alt="Recipe Image" width="200">
         <hr>
         <ol>
             {% for i in recipe.ingredients %}
