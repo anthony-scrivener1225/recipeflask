@@ -134,3 +134,11 @@ class Ingredient(db.Model):
 
     def __repr__(self):
         return f'{self.details}'
+
+class Direction(db.Model):
+    __tablename__ = 'directions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    details = db.Column(db.Text, default='Someone should really add some instructions here...')
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    recipes = db.relationship('Recipe', backref='directions')
