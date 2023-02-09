@@ -29,6 +29,22 @@ class AddRecipe(FlaskForm):
     ])
     submit = SubmitField('Submit')
 
+class UpdateRecipe(FlaskForm):
+    def tag_collector():
+        return db.session.query(Tag).all()
+
+    recipe_name = StringField('Name your recipe.', description="Give a succent yet detailed name for your recipe")
+    recipe_ingredients = FieldList(FormField(IngredientForm))
+    recipe_directions = FieldList(FormField(DirectionForm))
+    recipe_tags = QuerySelectMultipleField(query_factory=tag_collector)
+    recipe_description = TextAreaField('Provide details about the recipe and why it should be made')
+    file = FileField('File', validators=[
+        FileAllowed([".jpeg",".png"])
+    ])
+    submit = SubmitField('Submit')
+
+
+
 class AddTag(FlaskForm):
     tag_name = StringField('Tag name.', description='Short, single word tag name.')
     submit = SubmitField('Submit')
